@@ -4,7 +4,6 @@ import User from './User';
 import Navbar from './Navbar';
 import ParticlesBg from "particles-bg";
 import Carousel, { CarouselItem } from "./Carousel";
-import Slider from "react-slick";
 
 const Campaign = () => {
 

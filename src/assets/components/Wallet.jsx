@@ -1,92 +1,92 @@
-import { useEffect, useState } from "react";
-import Navbar from './Navbar';
-import ParticlesBg from "particles-bg";
+import React, { useState } from "react";
+import Navbar from './Navbar'
+
+
+export const wallet = (props) => {
 
 
 
+    return (
 
-function Wallet() {
-  const [walletAddress, setWalletAddress] = useState("");
+        <div>
 
-  useEffect(() => {
-    getCurrentWalletConnected();
-    addWalletListener();
-  }, [walletAddress]);
+            <body>
 
-  const connectWallet = async () => {
-    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-      try {
-        /* MetaMask is installed */
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletAddress(accounts[0]);
-        console.log(accounts[0]);
-      } catch (err) {
-        console.error(err.message);
-      }
-    } else {
-      /* MetaMask is not installed */
-      console.log("Please install MetaMask");
-    }
-  };
 
-  const getCurrentWalletConnected = async () => {
-    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_accounts",
-        });
-        if (accounts.length > 0) {
-          setWalletAddress(accounts[0]);
-          console.log(accounts[0]);
-        } else {
-          console.log("Connect to MetaMask using the Connect button");
-        }
-      } catch (err) {
-        console.error(err.message);
-      }
-    } else {
-      /* MetaMask is not installed */
-      console.log("Please install MetaMask");
-    }
-  };
+                <div class="container">
 
-  const addWalletListener = async () => {
-    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
-      window.ethereum.on("accountsChanged", (accounts) => {
-        setWalletAddress(accounts[0]);
-        console.log(accounts[0]);
-      });
-    } else {
-      /* MetaMask is not installed */
-      setWalletAddress("");
-      console.log("Please install MetaMask");
-    }
-  };
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" id="alert-error-https" style="display: none">
+                                You can run this example only over HTTPS connection.
+                            </div>
+                            <div id="prepare">
+                                <button
+                                    class="my-3 focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                  font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+                                    id="btn-connect">
+                                    Connect wallet
+                                </button>
+                            </div>
 
-  return (
-    <div>
-      <Navbar/>
-      <ParticlesBg num={100} type="cobweb" bg={true} />
-        <div className="App">
-              <button
-                className="w-96 text-white bg-gradient-to-r from-blue-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
-                focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                onClick={connectWallet}
-              >
-                <span className="is-link has-text-weight-bold">
-                  {walletAddress && walletAddress.length > 0
-                    ? `Connected: ${walletAddress.substring(
-                        0,
-                        15
-                      )}...${walletAddress.substring(38)}`
-                    : "Connect Wallet"}
-                </span>
-              </button>
-            </div>
-          </div>
-  );
+                            <div id="connected" style="display: none">
+
+                                <button
+                                    class="my-3 focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                  font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+                                    id="btn-disconnect">
+                                    Disconnect wallet
+                                </button>
+
+
+
+                                <div id="network">
+                                    <p>
+                                        <strong>Connected blockchain:</strong> <span id="network-name"></span>
+                                    </p>
+
+                                    <p>
+                                        <strong>Selected account:</strong> <span id="selected-account"></span>
+                                    </p>
+
+                                </div>
+
+
+                                <h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; All account balances</h3>
+
+                                <table class="table table-listing">
+                                    <thead>
+                                        <th>Address</th>
+                                        <th>ETH balance</th>
+                                    </thead>
+
+                                    <tbody id="accounts">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="templates" style="display: none">
+                    <template id="template-balance">
+                        <tr>
+                            <th class="address"></th>
+                            <td class="balance"></td>
+                        </tr>
+                    </template>
+                </div>
+
+
+                <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+                <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+                <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+                <script type="text/javascript"
+                    src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+                <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
+                <script type="text/javascript" src="../../../example.js"></script>
+            </body>
+        </div>
+    )
 }
-
-export default Wallet;
+export default wallet
